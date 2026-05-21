@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { loginUser, logoutUser, signupUser } from "../apiData/authApi";
+import { loginUser, logoutUser, signupUser, getMe } from "../apiData/authApi";
 import {
   loginRequest,
   loginSuccess,
@@ -9,6 +9,9 @@ import {
   signupRequest,
   signupSuccess,
   signupFailure,
+  checkAuthRequest,
+  checkAuthSuccess,
+  checkAuthFailure,
 } from "../slices/authSlice";
 
 function* handleLogin({ payload }) {
@@ -55,8 +58,22 @@ function* handleSignup({ payload }) {
     }
   } catch (error) {
     const errorMessage =
-      error.response.data.message || "Something went wrong. Please try again later.";
+      error.response.data.message ||
+      "Something went wrong. Please try again later.";
     yield put(signupFailure(errorMessage));
+  }
+}
+
+function* handleCheckAuth() {
+  try {
+    const responseData = yield call(getMe);
+    if (responseData.status === "success") {
+      console.log("responseData:", responseData);
+      yield put(checkAuthSuccess(responseData));
+    }
+  } catch (error) {
+    console.log("Błąd sprawdzania autoryzacji:", error);
+    yield put(checkAuthFailure());
   }
 }
 
@@ -64,4 +81,5 @@ export function* authSaga() {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(logoutRequest.type, handleLogout);
   yield takeLatest(signupRequest.type, handleSignup);
+  yield takeLatest(checkAuthRequest.type, handleCheckAuth);
 }

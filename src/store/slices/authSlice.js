@@ -38,15 +38,27 @@ const authSlice = createSlice({
       state.loading = true;
       state.error = null;
     },
-    signupSuccess: (state, {payload}) => {
+    signupSuccess: (state, { payload }) => {
       state.loading = false;
       state.user = payload.data.user;
       state.isAuthenticated = true;
     },
-    signupFailure: (state, {payload}) => {
+    signupFailure: (state, { payload }) => {
       state.loading = false;
       state.error = payload;
-    }
+    },
+    checkAuthRequest: (state) => {
+      state.loading = true;
+    },
+    checkAuthSuccess: (state, { payload }) => {
+      console.log("payload:", payload);
+      state.loading = false;
+      state.user = payload.data.data;
+      state.isAuthenticated = true;
+    },
+    checkAuthFailure: (state) => {
+      state.loading = false;
+    },
   },
 });
 
@@ -60,14 +72,19 @@ export const {
   signupRequest,
   signupSuccess,
   signupFailure,
+  checkAuthRequest,
+  checkAuthSuccess,
+  checkAuthFailure,
 } = authSlice.actions;
 
 const selectAuthState = (state) => state.auth;
 
-export const selectUser = state  => selectAuthState(state).user;
-export const selectLoading = state => selectAuthState(state).loading;
-export const selectLogoutLoading = state => selectAuthState(state).logoutLoading;
-export const selectError = state => selectAuthState(state).error;
-export const selectIsAuthenticated = state => selectAuthState(state).isAuthenticated;
+export const selectUser = (state) => selectAuthState(state).user;
+export const selectLoading = (state) => selectAuthState(state).loading;
+export const selectLogoutLoading = (state) =>
+  selectAuthState(state).logoutLoading;
+export const selectError = (state) => selectAuthState(state).error;
+export const selectIsAuthenticated = (state) =>
+  selectAuthState(state).isAuthenticated;
 
 export default authSlice.reducer;

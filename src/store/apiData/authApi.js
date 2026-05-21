@@ -37,3 +37,11 @@ export const signupUser = async (name, email, password, passwordConfirm) => {
   });
   return resposne.data;
 };
+
+export const getMe = async () => {
+  const response = await axios({
+    method: "GET",
+    url: `${API_URL}/users/me`,
+  });
+  return response.data;
+}
