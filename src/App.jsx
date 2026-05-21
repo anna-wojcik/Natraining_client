@@ -1,0 +1,91 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+// Layouty
+import MainLayout from "./layouts/MainLayout";
+import DashboardLayout from "./layouts/DashBoardLayout";
+
+// Komponenty i Strażnicy
+import ProtectedRoute from "./components/ProtectedRoute";
+
+// Strony publiczne (Przykładowe / Do zaimplementowania)
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+
+const HomePlaceholder = () => (
+  <div>
+    <h2>Strona Główna (Harmonogram publiczny)</h2>
+    <p>Tutaj znajdą się karty treningów z filtrami.</p>
+  </div>
+);
+
+// Strony prywatne - Panele (Przykładowe)
+const SettingsPage = () => (
+  <h2>Ustawienia Konta</h2>
+);
+const AdminUsersPage = () => (
+  <h2>Zarządzanie Użytkownikami</h2>
+);
+const AdminTrainingsPage = () => <h2>Zarządzanie Harmonogramem</h2>;
+const TrainerSchedulePage = () => <h2>Mój Grafik</h2>;
+const ClientBookingsPage = () => <h2>Moje Rezerwacje</h2>;
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* ---------------- ŚCIEŻKI PUBLICZNE ---------------- */}
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePlaceholder />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Route>
+
+        {/* ---------------- ŚCIEŻKI CHRONIONE (WSPÓLNE) ---------------- */}
+        <Route
+          element={
+            <ProtectedRoute allowedRoles={["user", "trainer", "admin"]} />
+          }
+        >
+          <Route path="/profile" element={<DashboardLayout />}>
+            <Route index element={<Navigate to="settings" replace />} />
+            <Route path="settings" element={<SettingsPage />} />
+          </Route>
+        </Route>
+
+        {/* ---------------- PANEL ADMINA ---------------- */}
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/profile" element={<DashboardLayout />}>
+            <Route path="manage-users" element={<AdminUsersPage />} />
+            <Route path="manage-trainings" element={<AdminTrainingsPage />} />
+            {/* Tutaj dodasz kolejne widoki: manage-types, manage-comments, manage-bookings */}
+          </Route>
+        </Route>
+
+        {/* ---------------- PANEL TRENERA ---------------- */}
+        <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
+          <Route path="/profile" element={<DashboardLayout />}>
+            <Route path="my-schedule" element={<TrainerSchedulePage />} />
+          </Route>
+        </Route>
+
+        {/* ---------------- PANEL KLIENTA ---------------- */}
+        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+          <Route path="/profile" element={<DashboardLayout />}>
+            <Route path="my-bookings" element={<ClientBookingsPage />} />
+            {/* Tutaj dodasz: favorites */}
+          </Route>
+        </Route>
+
+        {/* Obsługa błędu 404 - nieznana ścieżka */}
+        <Route
+          path="*"
+          element={
+            <div style={{ padding: "40px" }}>
+              <h2>404 - Strona nie istnieje</h2>
+            </div>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
