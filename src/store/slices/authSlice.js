@@ -59,6 +59,20 @@ const authSlice = createSlice({
     checkAuthFailure: (state) => {
       state.loading = false;
     },
+    updateSettingsRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    updateSettingsSuccess: (state, { payload }) => {
+      console.log("payload:", payload);
+      state.loading = false;
+      state.user = payload;
+    },
+    updateSettingsFailure: (state, { payload }) => {
+      console.log("payload:", payload);
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -75,6 +89,9 @@ export const {
   checkAuthRequest,
   checkAuthSuccess,
   checkAuthFailure,
+  updateSettingsRequest,
+  updateSettingsSuccess,
+  updateSettingsFailure,
 } = authSlice.actions;
 
 const selectAuthState = (state) => state.auth;

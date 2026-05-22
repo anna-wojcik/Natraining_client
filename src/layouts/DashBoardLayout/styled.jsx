@@ -15,10 +15,15 @@ export const Container = styled.div`
   margin: 0 auto;
   width: 100%;
   gap: 30px;
-  padding: 40px 20px;
+  padding: 20px;
 
   @media (max-width: 940px) {
     grid-template-columns: 1fr;
+    padding: 10px;
+    gap: 20px
+  }
+  @media (max-width: 640px) {
+    padding: 0;
   }
 `;
 
@@ -88,6 +93,9 @@ export const ContentArea = styled.main`
   border-radius: 15px;
   padding: 30px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 export const LogoutButton = styled.button`

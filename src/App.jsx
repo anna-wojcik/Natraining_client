@@ -10,6 +10,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 // Strony publiczne (Przykładowe / Do zaimplementowania)
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Settings from "./pages/Settings";
+
+import Alert from "./components/Alert";
 
 const HomePlaceholder = () => (
   <div>
@@ -18,74 +21,71 @@ const HomePlaceholder = () => (
   </div>
 );
 
-// Strony prywatne - Panele (Przykładowe)
-const SettingsPage = () => (
-  <h2>Ustawienia Konta</h2>
-);
-const AdminUsersPage = () => (
-  <h2>Zarządzanie Użytkownikami</h2>
-);
+const AdminUsersPage = () => <h2>Zarządzanie Użytkownikami</h2>;
 const AdminTrainingsPage = () => <h2>Zarządzanie Harmonogramem</h2>;
 const TrainerSchedulePage = () => <h2>Mój Grafik</h2>;
 const ClientBookingsPage = () => <h2>Moje Rezerwacje</h2>;
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* ---------------- ŚCIEŻKI PUBLICZNE ---------------- */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<HomePlaceholder />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Route>
-
-        {/* ---------------- ŚCIEŻKI CHRONIONE (WSPÓLNE) ---------------- */}
-        <Route
-          element={
-            <ProtectedRoute allowedRoles={["user", "trainer", "admin"]} />
-          }
-        >
-          <Route path="/profile" element={<DashboardLayout />}>
-            <Route index element={<Navigate to="settings" replace />} />
-            <Route path="settings" element={<SettingsPage />} />
+    <>
+      <Alert />
+      <BrowserRouter>
+        <Routes>
+          {/* ---------------- ŚCIEŻKI PUBLICZNE ---------------- */}
+          <Route element={<MainLayout />}>
+            <Route path="/" element={<HomePlaceholder />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Route>
-        </Route>
 
-        {/* ---------------- PANEL ADMINA ---------------- */}
-        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-          <Route path="/profile" element={<DashboardLayout />}>
-            <Route path="manage-users" element={<AdminUsersPage />} />
-            <Route path="manage-trainings" element={<AdminTrainingsPage />} />
-            {/* Tutaj dodasz kolejne widoki: manage-types, manage-comments, manage-bookings */}
+          {/* ---------------- ŚCIEŻKI CHRONIONE (WSPÓLNE) ---------------- */}
+          <Route
+            element={
+              <ProtectedRoute allowedRoles={["user", "trainer", "admin"]} />
+            }
+          >
+            <Route path="/profile" element={<DashboardLayout />}>
+              <Route index element={<Navigate to="settings" replace />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* ---------------- PANEL TRENERA ---------------- */}
-        <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
-          <Route path="/profile" element={<DashboardLayout />}>
-            <Route path="my-schedule" element={<TrainerSchedulePage />} />
+          {/* ---------------- PANEL ADMINA ---------------- */}
+          <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+            <Route path="/profile" element={<DashboardLayout />}>
+              <Route path="manage-users" element={<AdminUsersPage />} />
+              <Route path="manage-trainings" element={<AdminTrainingsPage />} />
+              {/* Tutaj dodasz kolejne widoki: manage-types, manage-comments, manage-bookings */}
+            </Route>
           </Route>
-        </Route>
 
-        {/* ---------------- PANEL KLIENTA ---------------- */}
-        <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
-          <Route path="/profile" element={<DashboardLayout />}>
-            <Route path="my-bookings" element={<ClientBookingsPage />} />
-            {/* Tutaj dodasz: favorites */}
+          {/* ---------------- PANEL TRENERA ---------------- */}
+          <Route element={<ProtectedRoute allowedRoles={["trainer"]} />}>
+            <Route path="/profile" element={<DashboardLayout />}>
+              <Route path="my-schedule" element={<TrainerSchedulePage />} />
+            </Route>
           </Route>
-        </Route>
 
-        {/* Obsługa błędu 404 - nieznana ścieżka */}
-        <Route
-          path="*"
-          element={
-            <div style={{ padding: "40px" }}>
-              <h2>404 - Strona nie istnieje</h2>
-            </div>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+          {/* ---------------- PANEL KLIENTA ---------------- */}
+          <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
+            <Route path="/profile" element={<DashboardLayout />}>
+              <Route path="my-bookings" element={<ClientBookingsPage />} />
+              {/* Tutaj dodasz: favorites */}
+            </Route>
+          </Route>
+
+          {/* Obsługa błędu 404 - nieznana ścieżka */}
+          <Route
+            path="*"
+            element={
+              <div style={{ padding: "40px" }}>
+                <h2>404 - Strona nie istnieje</h2>
+              </div>
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 }
