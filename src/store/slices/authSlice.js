@@ -51,7 +51,6 @@ const authSlice = createSlice({
       state.loading = true;
     },
     checkAuthSuccess: (state, { payload }) => {
-      console.log("payload:", payload);
       state.loading = false;
       state.user = payload.data.data;
       state.isAuthenticated = true;
@@ -64,12 +63,10 @@ const authSlice = createSlice({
       state.error = null;
     },
     updateSettingsSuccess: (state, { payload }) => {
-      console.log("payload:", payload);
       state.loading = false;
       state.user = payload;
     },
     updateSettingsFailure: (state, { payload }) => {
-      console.log("payload:", payload);
       state.loading = false;
       state.error = payload;
     },

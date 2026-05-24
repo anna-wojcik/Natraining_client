@@ -1,25 +1,16 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// Layouty
 import MainLayout from "./layouts/MainLayout";
 import DashboardLayout from "./layouts/DashBoardLayout";
 
-// Komponenty i Strażnicy
 import ProtectedRoute from "./components/ProtectedRoute";
 
-// Strony publiczne (Przykładowe / Do zaimplementowania)
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Settings from "./pages/Settings";
+import Home from "./pages/Home";
 
 import Alert from "./components/Alert";
-
-const HomePlaceholder = () => (
-  <div>
-    <h2>Strona Główna (Harmonogram publiczny)</h2>
-    <p>Tutaj znajdą się karty treningów z filtrami.</p>
-  </div>
-);
 
 const AdminUsersPage = () => <h2>Zarządzanie Użytkownikami</h2>;
 const AdminTrainingsPage = () => <h2>Zarządzanie Harmonogramem</h2>;
@@ -34,7 +25,7 @@ export default function App() {
         <Routes>
           {/* ---------------- ŚCIEŻKI PUBLICZNE ---------------- */}
           <Route element={<MainLayout />}>
-            <Route path="/" element={<HomePlaceholder />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>

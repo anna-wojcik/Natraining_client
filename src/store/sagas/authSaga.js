@@ -97,11 +97,10 @@ function* handleCheckAuth() {
   try {
     const responseData = yield call(getMe);
     if (responseData.status === "success") {
-      console.log("responseData:", responseData);
       yield put(checkAuthSuccess(responseData));
     }
   } catch (error) {
-    console.log("Błąd sprawdzania autoryzacji:", error);
+    console.log("Error while checking auth:", error);
     yield put(checkAuthFailure());
   }
 }
