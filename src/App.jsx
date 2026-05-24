@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Settings from "./pages/Settings";
 import Home from "./pages/Home";
+import TrainingDetails from "./pages/TrainingDetails";
 
 import Alert from "./components/Alert";
 
@@ -28,6 +29,7 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/trainings/:slug" element={<TrainingDetails />} />
           </Route>
 
           {/* ---------------- ŚCIEŻKI CHRONIONE (WSPÓLNE) ---------------- */}

@@ -12,3 +12,11 @@ export const fetchTrainings = async (page, limit) => {
   });
   return response.data;
 };
+
+export const fetchSingleTraining = async (id) => {
+  const response = await axios({
+    method: "GET",
+    url: `${API_URL}/trainings/${id}`,
+  });
+  return response.data;
+};

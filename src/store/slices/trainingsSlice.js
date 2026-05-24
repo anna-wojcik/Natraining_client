@@ -4,6 +4,7 @@ const trainingsSlice = createSlice({
   name: "trainings",
   initialState: {
     trainings: [],
+    currentTraining: null,
     loading: false,
     error: null,
     currentPage: 1,
@@ -30,15 +31,31 @@ const trainingsSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
-    setLimit: (state, { payload }) => {
-      state.limit = payload;
+    getSingleTrainingRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+      state.currentTraining = null;
+    },
+    getSingleTrainingSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.currentTraining = payload.data.data;
+    },
+    getSingleTrainingFailure: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
     },
   },
 });
 
 export const selectTrainingsState = (state) => state.trainings;
 
-export const { getTrainingsRequest, getTrainingsSuccess, getTrainingsFailure } =
-  trainingsSlice.actions;
+export const {
+  getTrainingsRequest,
+  getTrainingsSuccess,
+  getTrainingsFailure,
+  getSingleTrainingRequest,
+  getSingleTrainingSuccess,
+  getSingleTrainingFailure,
+} = trainingsSlice.actions;
 
 export default trainingsSlice.reducer;

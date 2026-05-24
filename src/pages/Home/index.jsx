@@ -169,7 +169,7 @@ export default function Home() {
                     </InfoRow>
 
                     <DetailButton
-                      onClick={() => navigate(`/trainings/${training._id}`)}
+                      onClick={() => navigate(`/trainings/${training.slug}`)}
                     >
                       Details
                       <ArrowIcon />
