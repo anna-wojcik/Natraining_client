@@ -5,6 +5,7 @@ import {
   getSingleTrainingRequest,
   selectTrainingsState,
 } from "../../store/slices/trainingsSlice";
+import { getCheckoutSessionRequest } from "../../store/slices/bookingsSlice";
 import {
   DetailsWrapper,
   BackButton,
@@ -27,13 +28,24 @@ export default function TrainingDetails() {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { currentTraining, loading, error } = useSelector(selectTrainingsState);
+  const {
+    currentTraining,
+    loading: trainingLoading,
+    error,
+  } = useSelector(selectTrainingsState);
+
+  const { loading: bookingLoading } = useSelector((state) => state.bookings);
 
   useEffect(() => {
     dispatch(getSingleTrainingRequest(slug));
   }, [dispatch, slug]);
 
-  if (loading)
+  const handleBooking = () => {
+    console.log("currentTraining", currentTraining._id);
+    dispatch(getCheckoutSessionRequest(currentTraining._id));
+  };
+
+  if (trainingLoading)
     return (
       <div style={{ padding: "50px", textAlign: "center" }}>
         Loading training details...
@@ -149,8 +161,16 @@ export default function TrainingDetails() {
               </InfoTile>
             </InfoGrid>
 
-            <button className="book-btn" disabled={currentTraining.isCanceled}>
-              {currentTraining.isCanceled ? "Canceled training" : "Book now"}
+            <button
+              className="book-btn"
+              disabled={currentTraining.isCanceled}
+              onClick={handleBooking}
+            >
+              {bookingLoading
+                ? "Redirecting to payment..."
+                : currentTraining.isCanceled
+                  ? "Canceled training"
+                  : "Book now"}
             </button>
           </ContentCard>
 
