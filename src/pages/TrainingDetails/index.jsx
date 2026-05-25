@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSingleTrainingRequest,
   selectTrainingsState,
 } from "../../store/slices/trainingsSlice";
 import { getCheckoutSessionRequest } from "../../store/slices/bookingsSlice";
+import { selectUser } from "../../store/slices/authSlice";
 import {
   DetailsWrapper,
   BackButton,
@@ -28,6 +29,9 @@ export default function TrainingDetails() {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const user = useSelector(selectUser);
   const {
     currentTraining,
     loading: trainingLoading,
@@ -41,7 +45,12 @@ export default function TrainingDetails() {
   }, [dispatch, slug]);
 
   const handleBooking = () => {
-    console.log("currentTraining", currentTraining._id);
+    if (!user) {
+      navigate("/login", {
+        state: { from: location.pathname },
+      });
+      return;
+    }
     dispatch(getCheckoutSessionRequest(currentTraining._id));
   };
 
@@ -163,14 +172,16 @@ export default function TrainingDetails() {
 
             <button
               className="book-btn"
-              disabled={currentTraining.isCanceled}
+              disabled={currentTraining.isCanceled || bookingLoading}
               onClick={handleBooking}
             >
               {bookingLoading
                 ? "Redirecting to payment..."
                 : currentTraining.isCanceled
                   ? "Canceled training"
-                  : "Book now"}
+                  : !user
+                    ? "Log in to book"
+                    : "Book now"}
             </button>
           </ContentCard>
 

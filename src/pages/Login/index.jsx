@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { loginRequest, clearError } from "../../store/slices/authSlice";
-import { selectError, selectLoading } from "../../store/slices/authSlice";
+import {
+  selectError,
+  selectLoading,
+  selectUser,
+  selectIsAuthenticated,
+} from "../../store/slices/authSlice";
 import { isValidField, regexEmail } from "../../regex";
 
 import {
@@ -29,8 +34,19 @@ export default function Login() {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+
   const serverError = useSelector(selectError);
   const loginLoading = useSelector(selectLoading);
+  const user = useSelector(selectUser);
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+
+  useEffect(() => {
+    if (isAuthenticated || user) {
+      const redirectPath = location.state?.from || "/";
+      navigate(redirectPath, { replace: true });
+    }
+  }, [isAuthenticated, user, navigate, location]);
 
   const validateForm = () => {
     const errors = {};
