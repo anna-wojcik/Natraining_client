@@ -14,7 +14,7 @@ const bookingsSlice = createSlice({
     },
     getBookingsSuccess: (state, { payload }) => {
       state.loading = false;
-      state.bookings = payload;
+      state.bookings = payload.data.data;
     },
     getBookingsFailure: (state, { payload }) => {
       state.loading = false;

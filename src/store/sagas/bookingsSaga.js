@@ -2,8 +2,11 @@ import { call, put, takeLatest } from "redux-saga/effects";
 import {
   getCheckoutSessionRequest,
   getCheckoutSessionFailure,
+  getBookingsRequest,
+  getBookingsSuccess,
+  getBookingsFailure,
 } from "../slices/bookingsSlice";
-import { fetchCheckoutSession } from "../apiData/apiBookings";
+import { fetchCheckoutSession, fetchBookings } from "../apiData/apiBookings";
 
 function* handleGetCheckoutSession({ payload }) {
   try {
@@ -21,6 +24,22 @@ function* handleGetCheckoutSession({ payload }) {
   }
 }
 
+function* handleGetBookings() {
+  try {
+    const responseData = yield call(fetchBookings);
+
+    if (responseData.status === "success") {
+      yield put(getBookingsSuccess(responseData));
+    }
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message ||
+      "Something went wrong. Please try again later.";
+    yield put(getBookingsFailure(errorMessage));
+  }
+}
+
 export function* bookingsSaga() {
   yield takeLatest(getCheckoutSessionRequest.type, handleGetCheckoutSession);
+  yield takeLatest(getBookingsRequest.type, handleGetBookings);
 }

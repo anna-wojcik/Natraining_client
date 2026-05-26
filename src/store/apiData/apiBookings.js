@@ -15,7 +15,6 @@ export const fetchCheckoutSession = async (trainingId) => {
   const response = await axios({
     method: "GET",
     url: `${API_URL}/bookings/checkout-session/${trainingId}`,
-    // data: { trainingId },
   });
   return response.data;
 };
