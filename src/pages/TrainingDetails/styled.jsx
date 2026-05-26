@@ -33,6 +33,19 @@ export const BackButton = styled.button`
   }
 `;
 
+export const ArrowIcon = styled.span`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: currentColor;
+  transform: rotate(180deg);
+  /* Prosta strzałka w lewo w formie maski SVG (zakodowana inline) */
+  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z'/></svg>")
+    no-repeat center / contain;
+  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'><path d='M5 13h11.86l-5.43 5.43 1.42 1.42L21.14 12l-8.29-8.29-1.42 1.42 5.43 5.43H5v2z'/></svg>")
+    no-repeat center / contain;
+`;
+
 export const HeroSection = styled.div`
   position: relative;
   height: 320px;
@@ -133,7 +146,7 @@ export const Sidebar = styled.div`
     }
 
     @media (max-width: 992px) {
-      order: 1; 
+      order: 1;
     }
   }
 

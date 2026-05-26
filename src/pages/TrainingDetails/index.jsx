@@ -10,6 +10,7 @@ import { selectUser } from "../../store/slices/authSlice";
 import {
   DetailsWrapper,
   BackButton,
+  ArrowIcon,
   HeroSection,
   HeroOverlay,
   HeroContent,
@@ -74,7 +75,10 @@ export default function TrainingDetails() {
 
   return (
     <DetailsWrapper>
-      <BackButton onClick={() => navigate(-1)}>← Back to schedule</BackButton>
+      <BackButton onClick={() => navigate(-1)}>
+        <ArrowIcon />
+        Back to schedule
+      </BackButton>
 
       <HeroSection
         $bgImage={`http://localhost:3000/img/trainings/${currentTraining.imageCover || "default.jpg"}`}
