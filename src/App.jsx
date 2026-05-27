@@ -11,10 +11,9 @@ import Settings from "./pages/Settings";
 import Home from "./pages/Home";
 import TrainingDetails from "./pages/TrainingDetails";
 import Bookings from "./pages/Bookings";
-
+import Users from "./pages/Users";
 import Alert from "./components/Alert";
 
-const AdminUsersPage = () => <h2>Zarządzanie Użytkownikami</h2>;
 const AdminTrainingsPage = () => <h2>Zarządzanie Harmonogramem</h2>;
 const TrainerSchedulePage = () => <h2>Mój Grafik</h2>;
 
@@ -47,10 +46,9 @@ export default function App() {
           {/* ---------------- PANEL ADMINA ---------------- */}
           <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
             <Route path="/profile" element={<DashboardLayout />}>
-              <Route path="manage-users" element={<AdminUsersPage />} />
+              <Route path="manage-users" element={<Users />} />
               <Route path="manage-trainings" element={<AdminTrainingsPage />} />
               <Route path="manage-bookings" element={<Bookings />} />
-              {/* Tutaj dodasz kolejne widoki: manage-types, manage-comments, manage-bookings */}
             </Route>
           </Route>
 
@@ -65,11 +63,9 @@ export default function App() {
           <Route element={<ProtectedRoute allowedRoles={["user"]} />}>
             <Route path="/profile" element={<DashboardLayout />}>
               <Route path="my-bookings" element={<Bookings />} />
-              {/* Tutaj dodasz: favorites */}
             </Route>
           </Route>
 
-          {/* Obsługa błędu 404 - nieznana ścieżka */}
           <Route
             path="*"
             element={

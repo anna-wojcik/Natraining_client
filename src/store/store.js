@@ -4,13 +4,15 @@ import authReducer from "./slices/authSlice";
 import alertReducer from "./slices/alertSlice";
 import trainingsReducer from "./slices/trainingsSlice";
 import bookingsReducer from "./slices/bookingsSlice";
+import usersReducer from "./slices/usersSlice";
 import { authSaga } from "./sagas/authSaga";
 import { trainingsSaga } from "./sagas/trainingsSaga";
 import { bookingsSaga } from "./sagas/bookingsSaga";
+import { usersSaga } from "./sagas/usersSaga";
 import { all } from "redux-saga/effects";
 
 function* rootSaga() {
-  yield all([authSaga(), trainingsSaga(), bookingsSaga()]);
+  yield all([authSaga(), trainingsSaga(), bookingsSaga(), usersSaga()]);
 }
 
 const sagaMiddleware = createSagaMiddleware();
@@ -21,6 +23,7 @@ const store = configureStore({
     alert: alertReducer,
     trainings: trainingsReducer,
     bookings: bookingsReducer,
+    users: usersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({ thunk: false }).concat(sagaMiddleware),

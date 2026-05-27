@@ -1,6 +1,8 @@
 import axios from "axios";
 import { API_URL } from "./apiData";
 
+axios.defaults.withCredentials = true;
+
 export const updateMe = async (formData) => {
   const response = await axios({
     method: "PATCH",

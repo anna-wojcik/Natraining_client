@@ -12,7 +12,14 @@ import {
   NavItem,
   ContentArea,
   LogoutButton,
+  StyledSettingsIcon,
+  StyledCalendarIcon,
+  StyledGroupIcon,
+  StyledCommentIcon,
+  StyledCreditCardIcon,
+  StyledLogoutIcon,
 } from "./styled";
+
 import Header from "../../components/Header";
 
 export default function DashboardLayout() {
@@ -41,7 +48,7 @@ export default function DashboardLayout() {
               to="/profile/settings"
               $active={location.pathname === "/profile/settings"}
             >
-              ⚙️ Ustawienia
+              <StyledSettingsIcon /> Settings
             </NavItem>
 
             {user.role === "admin" && (
@@ -50,25 +57,26 @@ export default function DashboardLayout() {
                   to="/profile/manage-trainings"
                   $active={location.pathname === "/profile/manage-trainings"}
                 >
-                  📅 Harmonogram
+                  <StyledCalendarIcon /> Trainings
                 </NavItem>
                 <NavItem
                   to="/profile/manage-users"
                   $active={location.pathname === "/profile/manage-users"}
                 >
-                  👥 Użytkownicy
+                  <StyledGroupIcon /> Users
                 </NavItem>
                 <NavItem
                   to="/profile/manage-comments"
                   $active={location.pathname === "/profile/manage-comments"}
                 >
-                  💬 Komentarze
+                  <StyledCommentIcon />
+                  Reviews
                 </NavItem>
                 <NavItem
                   to="/profile/manage-bookings"
                   $active={location.pathname === "/profile/manage-bookings"}
                 >
-                  💳 Rezerwacje
+                  <StyledCreditCardIcon /> Bookings
                 </NavItem>
               </>
             )}
@@ -79,7 +87,7 @@ export default function DashboardLayout() {
                   to="/profile/my-schedule"
                   $active={location.pathname === "/profile/my-schedule"}
                 >
-                  📅 Mój harmonogram
+                  <StyledCalendarIcon /> Trainings
                 </NavItem>
               </>
             )}
@@ -90,20 +98,14 @@ export default function DashboardLayout() {
                   to="/profile/my-bookings"
                   $active={location.pathname === "/profile/my-bookings"}
                 >
-                  💳 Rezerwacje
-                </NavItem>
-                <NavItem
-                  to="/profile/favorites"
-                  $active={location.pathname === "/profile/favorites"}
-                >
-                  ❤️ Ulubione treningi
+                  <StyledCreditCardIcon /> Bookings
                 </NavItem>
               </>
             )}
           </NavList>
 
           <LogoutButton onClick={() => dispatch(logoutRequest())}>
-            🚪 Wyloguj się
+            <StyledLogoutIcon /> Logout
           </LogoutButton>
         </Sidebar>
 
