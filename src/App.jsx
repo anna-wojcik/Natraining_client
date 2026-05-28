@@ -14,9 +14,8 @@ import Bookings from "./pages/Bookings";
 import Users from "./pages/Users";
 import ReviewsManagementPage from "./pages/ReviewsManagementPage";
 import AdminTrainingsPage from "./pages/AdminTrainingsPage";
+import TrainerSchedulePage from "./pages/TrainerSchedulePage";
 import Alert from "./components/Alert";
-
-const TrainerSchedulePage = () => <h2>Mój Grafik</h2>;
 
 export default function App() {
   return (

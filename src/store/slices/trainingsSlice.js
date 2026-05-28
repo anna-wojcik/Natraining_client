@@ -82,6 +82,19 @@ const trainingsSlice = createSlice({
       state.loading = false;
       state.error = payload;
     },
+    getTrainerTrainingsRequest: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    getTrainerTrainingsSuccess: (state, { payload }) => {
+      state.loading = false;
+      state.trainings = payload.data.data;
+      state.totalResults = payload.results || payload.data.data.length;
+    },
+    getTrainerTrainingsFailure: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload;
+    },
   },
 });
 
@@ -103,6 +116,9 @@ export const {
   deleteTrainingRequest,
   deleteTrainingSuccess,
   deleteTrainingFailure,
+  getTrainerTrainingsRequest,
+  getTrainerTrainingsSuccess,
+  getTrainerTrainingsFailure,
 } = trainingsSlice.actions;
 
 export default trainingsSlice.reducer;

@@ -15,6 +15,9 @@ import {
   deleteTrainingRequest,
   deleteTrainingSuccess,
   deleteTrainingFailure,
+  getTrainerTrainingsRequest,
+  getTrainerTrainingsSuccess,
+  getTrainerTrainingsFailure,
 } from "../slices/trainingsSlice";
 import {
   fetchTrainings,
@@ -22,6 +25,7 @@ import {
   createTraining,
   updateTraining,
   deleteTraining,
+  fetchTrainerTrainings,
 } from "../apiData/apiTrainings";
 import { setAlert, clearAlert } from "../slices/alertSlice";
 
@@ -128,10 +132,24 @@ function* handleDeleteTraining({ payload: id }) {
   }
 }
 
+function* handleGetTrainerTrainings({ payload }) {
+  try {
+    const data = yield call(fetchTrainerTrainings, payload);
+    yield put(getTrainerTrainingsSuccess(data));
+  } catch (err) {
+    yield put(
+      getTrainerTrainingsFailure(
+        err.response?.data?.message || "Failed to load schedule.",
+      ),
+    );
+  }
+}
+
 export function* trainingsSaga() {
   yield takeLatest(getTrainingsRequest.type, handleGetTrainings);
   yield takeLatest(getSingleTrainingRequest.type, handleGetSingleTraining);
   yield takeLatest(createTrainingRequest.type, handleCreateTraining);
   yield takeLatest(updateTrainingRequest.type, handleUpdateTraining);
   yield takeLatest(deleteTrainingRequest.type, handleDeleteTraining);
+  yield takeLatest(getTrainerTrainingsRequest.type, handleGetTrainerTrainings);
 }

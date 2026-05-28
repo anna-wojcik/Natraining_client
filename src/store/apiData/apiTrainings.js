@@ -52,3 +52,12 @@ export const deleteTraining = async (id) => {
   });
   return response.data;
 };
+
+export const fetchTrainerTrainings = async ({ trainerId }) => {
+  const response = await axios({
+    method: "GET",
+    url: `${API_URL}/trainings`,
+    params: { trainers: trainerId },
+  });
+  return response.data;
+};
