@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import TrainingDetails from "./pages/TrainingDetails";
 import Bookings from "./pages/Bookings";
 import Users from "./pages/Users";
+import ReviewsManagementPage from "./pages/ReviewsManagementPage";
 import Alert from "./components/Alert";
 
 const AdminTrainingsPage = () => <h2>Zarządzanie Harmonogramem</h2>;
@@ -49,6 +50,10 @@ export default function App() {
               <Route path="manage-users" element={<Users />} />
               <Route path="manage-trainings" element={<AdminTrainingsPage />} />
               <Route path="manage-bookings" element={<Bookings />} />
+              <Route
+                path="manage-comments"
+                element={<ReviewsManagementPage />}
+              />
             </Route>
           </Route>
 

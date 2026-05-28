@@ -75,25 +75,6 @@ export const NavList = styled.ul`
   margin-top: 20px;
 `;
 
-// export const NavItem = styled(Link)`
-//   display: flex;
-//   align-items: center;
-//   padding: 14px 25px;
-//   font-size: 15px;
-//   color: ${(props) => (props.$active ? props.theme.colors.primary : "#555555")};
-//   background-color: ${(props) => (props.$active ? "#f4f9ff" : "transparent")};
-//   border-left: 4px solid
-//     ${(props) => (props.$active ? props.theme.colors.primary : "transparent")};
-//   font-weight: ${(props) => (props.$active ? "600" : "400")};
-//   gap: 15px;
-//   transition: all 0.2s ease;
-
-//   &:hover {
-//     background-color: #f4f9ff;
-//     color: ${(props) => props.theme.colors.primary};
-//   }
-// `;
-
 export const ContentArea = styled.main`
   background: ${(props) => props.theme.colors.white};
   border-radius: 15px;
@@ -103,31 +84,6 @@ export const ContentArea = styled.main`
   flex-direction: column;
   gap: 20px;
 `;
-
-// export const LogoutButton = styled.button`
-//   background: none;
-//   border: none;
-//   display: flex;
-//   align-items: center;
-//   padding: 14px 25px;
-//   font-size: 15px;
-//   color: ${(props) => props.theme.colors.danger};
-//   gap: 15px;
-//   cursor: pointer;
-//   width: 100%;
-//   text-align: left;
-//   margin-top: auto;
-
-//   &:hover {
-//     background-color: #f4f9ff;
-//     color: ${(props) => props.theme.colors.primary};
-//   }
-// `;
-
-// export const StyledSettingsIcon = styled(settingsIcon)`
-//   width: 20px;
-//   height: 20px;
-// `;
 
 export const NavItem = styled(Link)`
   display: flex;
