@@ -1,4 +1,4 @@
-import { call, put, takeLatest } from "redux-saga/effects";
+import { call, put, takeLatest, delay } from "redux-saga/effects";
 import {
   getTrainingsRequest,
   getTrainingsSuccess,
@@ -6,8 +6,24 @@ import {
   getSingleTrainingRequest,
   getSingleTrainingSuccess,
   getSingleTrainingFailure,
+  createTrainingRequest,
+  createTrainingSuccess,
+  createTrainingFailure,
+  updateTrainingRequest,
+  updateTrainingSuccess,
+  updateTrainingFailure,
+  deleteTrainingRequest,
+  deleteTrainingSuccess,
+  deleteTrainingFailure,
 } from "../slices/trainingsSlice";
-import { fetchTrainings, fetchSingleTraining } from "../apiData/apiTrainings";
+import {
+  fetchTrainings,
+  fetchSingleTraining,
+  createTraining,
+  updateTraining,
+  deleteTraining,
+} from "../apiData/apiTrainings";
+import { setAlert, clearAlert } from "../slices/alertSlice";
 
 function* handleGetTrainings({ payload }) {
   try {
@@ -40,7 +56,82 @@ function* handleGetSingleTraining({ payload }) {
   }
 }
 
+function* handleCreateTraining({ payload }) {
+  try {
+    const data = yield call(createTraining, payload);
+    yield put(createTrainingSuccess(data));
+    yield put(
+      setAlert({
+        message: "Trening added correctly!",
+        type: "success",
+      }),
+    );
+    yield delay(3000);
+    yield put(clearAlert());
+  } catch (error) {
+    const errorMessage =
+      error.response.data.message ||
+      "Something went wrong. Please try again later.";
+    console.log(errorMessage);
+    yield put(createTrainingFailure(errorMessage));
+    yield put(setAlert({ message: errorMessage, type: "error" }));
+  }
+}
+
+function* handleUpdateTraining({ payload }) {
+  try {
+    const data = yield call(updateTraining, payload);
+    yield put(updateTrainingSuccess(data));
+    yield put(
+      setAlert({
+        message: "Training updated successfully!",
+        type: "success",
+      }),
+    );
+    yield delay(4000);
+    yield put(clearAlert());
+  } catch (err) {
+    yield put(
+      updateTrainingFailure(err.response?.data?.message || "Update failed."),
+    );
+    yield put(
+      setAlert({
+        message: err.response?.data?.message || "Update failed.",
+        type: "error",
+      }),
+    );
+  }
+}
+
+function* handleDeleteTraining({ payload: id }) {
+  try {
+    yield call(deleteTraining, id);
+    yield put(deleteTrainingSuccess(id));
+    yield put(
+      setAlert({
+        message: "Training deleted from database.",
+        type: "success",
+      }),
+    );
+    yield delay(4000);
+    yield put(clearAlert());
+  } catch (err) {
+    yield put(
+      deleteTrainingFailure(err.response?.data?.message || "Delete failed."),
+    );
+    yield put(
+      setAlert({
+        message: err.response?.data?.message || "Delete failed.",
+        type: "error",
+      }),
+    );
+  }
+}
+
 export function* trainingsSaga() {
   yield takeLatest(getTrainingsRequest.type, handleGetTrainings);
   yield takeLatest(getSingleTrainingRequest.type, handleGetSingleTraining);
+  yield takeLatest(createTrainingRequest.type, handleCreateTraining);
+  yield takeLatest(updateTrainingRequest.type, handleUpdateTraining);
+  yield takeLatest(deleteTrainingRequest.type, handleDeleteTraining);
 }
