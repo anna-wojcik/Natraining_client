@@ -521,11 +521,10 @@ export default function AdminTrainingsPage() {
   };
 
   const openEditModal = (e, item) => {
-    e.stopPropagation(); // Zapobiega rozwijaniu kafelka przy kliknięciu w edycję
+    e.stopPropagation();
     setIsEditMode(true);
     setSelectedTrainingId(item._id);
 
-    // Wstrzyknięcie danych do formularza
     setName(item.name);
     setDuration(item.duration);
     setTrainingType(item.trainingType);
@@ -545,7 +544,7 @@ export default function AdminTrainingsPage() {
   };
 
   const handleDelete = (e, id, trainingName) => {
-    e.stopPropagation(); // Zapobiega rozwijaniu kafelka
+    e.stopPropagation();
     if (
       window.confirm(
         `Are you absolutely sure you want to delete "${trainingName}"?`,
@@ -604,12 +603,10 @@ export default function AdminTrainingsPage() {
     };
 
     if (isEditMode) {
-      // Przy edycji wysyłamy obiekt z ID
       dispatch(
         updateTrainingRequest({ id: selectedTrainingId, ...trainingData }),
       );
     } else {
-      // Przy tworzeniu dorzucamy zdefiniowaną okładkę
       dispatch(
         createTrainingRequest({ ...trainingData, imageCover: fileName }),
       );
@@ -657,7 +654,6 @@ export default function AdminTrainingsPage() {
                   <span className="type-tag">{item.trainingType}</span>
                   <span className="price-tag">{item.price} PLN</span>
 
-                  {/* 🎯 [NOWOŚĆ] Przyciski szybkiej akcji w nagłówku kafelka */}
                   <div className="action-buttons-group">
                     <button
                       className="icon-action-btn edit-btn"
@@ -761,7 +757,6 @@ export default function AdminTrainingsPage() {
         </div>
       </PaginationSection>
 
-      {/* MODAL MODUŁU EDYCJI / TWORZENIA */}
       {isModalOpen && (
         <ModalOverlay onClick={handleCloseModal}>
           <ModalContainer onClick={(e) => e.stopPropagation()}>

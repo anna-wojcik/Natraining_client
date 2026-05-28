@@ -655,17 +655,26 @@ export const ButtonGroup = styled.div`
 
 export const PaginationSection = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 25px;
   padding-top: 20px;
   border-top: 1px solid #e2e8f0;
 
+  .limit-selector {
+    font-size: 13px;
+    color: #64748b;
+    select {
+      padding: 4px 8px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+    }
+  }
   .page-controls {
     display: flex;
     gap: 10px;
     align-items: center;
     font-size: 13px;
-    color: #64748b;
     button {
       padding: 6px 12px;
       background: white;
